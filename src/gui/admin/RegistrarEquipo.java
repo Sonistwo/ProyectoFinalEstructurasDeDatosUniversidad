@@ -2,6 +2,9 @@ package gui.admin;
 
 import gui.control.ControlVentanas;
 import gui.modelado.ModeloTabla;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,7 +22,6 @@ import logica.entidades.equipos.TabletaGrafica;
 import logica.listas.listaPrestamosDiseno;
 import logica.listas.listaPrestamosIngenieria;
 
-import logica.verificarCampos.camposVacios;
 import logica.verificarCampos.integridadDatos;
 
 public class RegistrarEquipo extends javax.swing.JFrame {
@@ -39,7 +41,9 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     public RegistrarEquipo() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         eventoSalida();
+        eventoItem();
         inicializarTablas();
         mostrarEnTabla();
     }
@@ -114,12 +118,6 @@ public class RegistrarEquipo extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel3MouseMoved(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Señor administrador, registre los datos del equipo a continuación");
@@ -133,14 +131,38 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel11.setText("$ COP");
 
+        campoPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoPrecioKeyPressed(evt);
+            }
+        });
+
         jLabel12.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel12.setText("Precio");
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel13.setText("Marca");
 
+        campoMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoMarcaKeyPressed(evt);
+            }
+        });
+
+        campoSerial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoSerialKeyPressed(evt);
+            }
+        });
+
         etSerial1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         etSerial1.setText("Serial");
+
+        campoTamano.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoTamanoKeyPressed(evt);
+            }
+        });
 
         jLabel3.setText("Sin caracteres especiales");
 
@@ -236,11 +258,6 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         imagenTipo.setToolTipText("");
 
         cboxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Portátil", "Tableta gráfica" }));
-        cboxTipo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cboxTipoMouseClicked(evt);
-            }
-        });
 
         etSerial2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         etSerial2.setText("Tipo de equipo");
@@ -266,16 +283,16 @@ public class RegistrarEquipo extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
+                        .addGap(79, 79, 79)
                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
+                        .addGap(60, 60, 60)
                         .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87)
+                        .addGap(60, 60, 60)
                         .addComponent(btnLimpiar))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +309,6 @@ public class RegistrarEquipo extends javax.swing.JFrame {
                             .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(etSerial2))
                         .addGap(64, 64, 64)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -404,7 +420,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
@@ -419,17 +435,17 @@ public class RegistrarEquipo extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(cantTablets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(136, 136, 136)
+                        .addGap(130, 130, 130)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(cantPC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))))
-                .addGap(16, 16, 16))
+                .addGap(15, 15, 15))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
@@ -442,12 +458,11 @@ public class RegistrarEquipo extends javax.swing.JFrame {
                     .addComponent(cantTablets))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cantTotal)
-                        .addComponent(btnEliminarTablet))
+                    .addComponent(cantTotal)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(btnEliminarPortatil)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addComponent(btnEliminarTablet)))
         );
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
@@ -464,7 +479,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +509,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
             return;
         }
 
-        long serial = Long.parseLong(campoSerial.getText());
+        String serial = campoSerial.getText();
         String tipoEquipo = cboxTipo.getSelectedItem().toString();
         String marca = campoMarca.getText().toUpperCase();
         float tamano = Float.parseFloat(campoTamano.getText());
@@ -560,7 +575,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
             return;
         }
         
-        long serial = (Long) tablaTablets.getValueAt(tabletSeleccionada, 0);
+        String serial = (String) tablaTablets.getValueAt(tabletSeleccionada, 0);
         
         if(prestamosDis.tabletaYaPrestada(listaTablets.obtenerTablet(serial))){
             JOptionPane.showMessageDialog(null, "Esta tableta se encuentra en un préstamo actualmente.\nSolicite al usuario una devolución antes de eliminar este registro.", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -588,7 +603,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
             return;
         }
         
-        long serial = (Long) tablaPC.getValueAt(tabletSeleccionada, 0);
+        String serial = (String) tablaPC.getValueAt(tabletSeleccionada, 0);
         
         if(prestamosInge.computadorYaPrestado(listaPC.obtenerPC(serial))){
             JOptionPane.showMessageDialog(null, "Este portátil se encuentra en un préstamo actualmente.\nSolicite al usuario una devolución antes de eliminar este registro.", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -607,17 +622,47 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEliminarPortatilActionPerformed
 
-    private void cboxTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxTipoMouseClicked
+    private void campoSerialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSerialKeyPressed
         
-        checarImagenTipo();
+        campoSerial.setBorder(ControlVentanas.NORMAL_TXT);
         
-    }//GEN-LAST:event_cboxTipoMouseClicked
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            campoMarca.requestFocusInWindow();
+            
+        }
+        
+    }//GEN-LAST:event_campoSerialKeyPressed
 
-    private void jPanel3MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseMoved
-       
-        checarImagenTipo();
+    private void campoMarcaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoMarcaKeyPressed
+        campoMarca.setBorder(ControlVentanas.NORMAL_TXT);
         
-    }//GEN-LAST:event_jPanel3MouseMoved
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            campoPrecio.requestFocusInWindow();
+            
+        }
+    }//GEN-LAST:event_campoMarcaKeyPressed
+
+    private void campoPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecioKeyPressed
+        campoPrecio.setBorder(ControlVentanas.NORMAL_TXT);
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            campoTamano.requestFocusInWindow();
+            
+        }
+    }//GEN-LAST:event_campoPrecioKeyPressed
+
+    private void campoTamanoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanoKeyPressed
+        campoTamano.setBorder(ControlVentanas.NORMAL_TXT);
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            btnAceptarActionPerformed(null);
+            
+        }
+    }//GEN-LAST:event_campoTamanoKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -666,14 +711,8 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
         integridadDatos inspector = new integridadDatos();
 
-        String serial = campoSerial.getText();
         String precio = campoPrecio.getText();
         String tamano = campoTamano.getText();
-
-        if (!inspector.verificarEntero(serial)) {
-            JOptionPane.showMessageDialog(null, "Hay caracteres inválidos en el campo de Serial o es un valor inválido.\nCorríjalo e intente nuevamente.", "Error", JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
 
         if (!inspector.verificarFlotante(precio)) {
             JOptionPane.showMessageDialog(null, "Hay caracteres inválidos en el campo precio o es no válido.\nCorríjalo e intente nuevamente (use un punto como separador decimal).", "Error", JOptionPane.WARNING_MESSAGE);
@@ -691,22 +730,33 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
     private boolean verificarSinVacios() {
 
-        camposVacios ojoQueTodoLoVe = new camposVacios();
+        boolean vacios = false;
 
-        String serial = campoSerial.getText();
-        String precio = campoPrecio.getText();
-        String tamano = campoTamano.getText();
-        String marca = campoMarca.getText();
+        String mensajePopup = "Se han encontrado campos vacíos, corríjalos por favor:\n";
 
-        String campos[] = {serial, precio, tamano, marca};
-
-        if (!ojoQueTodoLoVe.sinVacios(campos)) {
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos en algún campo.\nAsegúrese de llenar todos los campos.");
-            return false;
+        if(campoSerial.getText().isEmpty()){
+            vacios = true;
+            campoSerial.setBorder(ControlVentanas.MAL_TXT);
+            mensajePopup += "Serial\n";
         }
-
-        if (cboxTipo.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado un tipo de equipo.\nCorrijalo, por favor.");
+        if(campoPrecio.getText().isEmpty()){
+            vacios = true;
+            campoPrecio.setBorder(ControlVentanas.MAL_TXT);
+            mensajePopup += "Precio\n";
+        }
+        if(campoSerial.getText().isEmpty()){
+            vacios = true;
+            campoMarca.setBorder(ControlVentanas.MAL_TXT);
+            mensajePopup += "Marca\n";
+        }
+        if(campoTamano.getText().isEmpty()){
+            vacios = true;
+            campoTamano.setBorder(ControlVentanas.MAL_TXT);
+            mensajePopup += "Tamaño\n";
+        }
+        
+        if(vacios){
+            JOptionPane.showMessageDialog(null, mensajePopup, "Error", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
@@ -757,7 +807,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     private void mostrarEnTabla() {
 
         for (TabletaGrafica G : tablets.copiarLista()) {
-            long serial = G.getSerial();
+            String serial = G.getSerial();
             String marca = G.getMarca();
             double tamano = G.getTamano();
             float precio = G.getPrecio();
@@ -769,7 +819,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         }
 
         for (Computador PC : portatiles.copiarLista()) {
-            long serial = PC.getSerial();
+            String serial = PC.getSerial();
             String marca = PC.getMarca();
             double tamano = PC.getTamano();
             float precio = PC.getPrecio();
@@ -796,9 +846,9 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
         int espacioElegido = cboxTipo.getSelectedIndex();
 
-        Icon porDefecto = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/admin/equipo.png")).getImage());
-        Icon opcionPC = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/admin/portatil.png")).getImage());
-        Icon opcionTablet = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/admin/tablet.png")).getImage());
+        Icon porDefecto = new ImageIcon(getClass().getResource("/recursos/admin/equipo.png"));
+        Icon opcionPC = new ImageIcon(getClass().getResource("/recursos/admin/portatil.png"));
+        Icon opcionTablet = new ImageIcon(getClass().getResource("/recursos/admin/tablet.png"));
 
         switch (espacioElegido) {
 
@@ -827,6 +877,15 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         cantTablets.setText("Hay " + tablets.copiarLista().size() + " tabletas");
         cantTotal.setText("Hay " + (tablets.copiarLista().size() + portatiles.copiarLista().size()) + " equipos registrados");
         
+    }
+
+    private void eventoItem() {
+        cboxTipo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                checarImagenTipo();
+            }
+        });
     }
     
 }

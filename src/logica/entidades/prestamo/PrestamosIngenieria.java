@@ -34,9 +34,9 @@ public class PrestamosIngenieria implements Serializable {
         return solicitante;
     }
     
-    public void devolverComputador(long serial){
+    public void devolverComputador(String serial){
         for(Computador pc : equiposPrestados){
-            if(pc.getSerial() == serial){
+            if(pc.getSerial().equals(serial)){
                 equiposPrestados.remove(pc);
             }
         }

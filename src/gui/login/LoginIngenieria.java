@@ -20,6 +20,8 @@ public class LoginIngenieria extends javax.swing.JFrame {
     public LoginIngenieria() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         eventoSalida();
     }
 
@@ -77,6 +79,12 @@ public class LoginIngenieria extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Serial");
+
+        campoCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoCedulaKeyPressed(evt);
+            }
+        });
 
         campoSerial.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -166,9 +174,9 @@ public class LoginIngenieria extends javax.swing.JFrame {
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(campoSerial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(btnContinuar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
@@ -221,6 +229,8 @@ public class LoginIngenieria extends javax.swing.JFrame {
 
     private void campoSerialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSerialKeyPressed
         
+        campoSerial.setBorder(ControlVentanas.NORMAL_TXT);
+        
         int teclaPresionada = evt.getKeyCode();
         
         if(teclaPresionada == KeyEvent.VK_ENTER){
@@ -230,6 +240,18 @@ public class LoginIngenieria extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_campoSerialKeyPressed
+
+    private void campoCedulaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCedulaKeyPressed
+    
+        campoCedula.setBorder(ControlVentanas.NORMAL_TXT);
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            campoSerial.requestFocusInWindow();
+            
+        }
+
+    }//GEN-LAST:event_campoCedulaKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinuar;
@@ -271,15 +293,23 @@ public class LoginIngenieria extends javax.swing.JFrame {
     
     private boolean verificarSinVacios(){
         
-        camposVacios espejitoEspejito = new camposVacios();
+        boolean vacio = false;
         
-        String cedula = campoCedula.getText();
-        String serial = campoSerial.getText();
-        
-        String[] datos = {cedula, serial};
-        
-        if(!espejitoEspejito.sinVacios(datos)){
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos en algún campo.\nAsegúrese de llenar todos los campos.");
+        String mensajePopup = "Hay campos vacios:\n";
+
+        if(campoCedula.getText().isEmpty()){
+            vacio = true;
+            campoCedula.setBorder(ControlVentanas.MAL_TXT);
+            mensajePopup += "Cédula";
+        }
+        if(campoSerial.getText().isEmpty()){
+            vacio = true;
+            campoSerial.setBorder(ControlVentanas.MAL_TXT);
+            mensajePopup += "Cédula";
+        }
+
+        if(vacio){
+            JOptionPane.showMessageDialog(null, mensajePopup, "Error", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         

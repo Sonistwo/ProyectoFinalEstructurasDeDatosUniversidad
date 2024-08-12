@@ -7,7 +7,7 @@ public class TabletaGrafica extends Equipo implements Serializable {
     private String almacenamiento;
     private float peso;
 
-    public TabletaGrafica(String almacenamiento, float peso, long serial, String marca, double tamano, float precio) {
+    public TabletaGrafica(String almacenamiento, float peso, String serial, String marca, double tamano, float precio) {
         super(serial, marca, tamano, precio);
         this.almacenamiento = almacenamiento;
         this.peso = peso;

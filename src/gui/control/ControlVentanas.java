@@ -3,8 +3,14 @@ package gui.control;
 import gui.login.*;
 import gui.admin.*;
 import gui.prestamos.*;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 public class ControlVentanas {
+    
+    public static Border MAL_TXT = BorderFactory.createLineBorder(Color.red);
+    public static Border NORMAL_TXT = BorderFactory.createLineBorder(Color.black);
 
     public static void cargarPrincipal(){
         new Principal().setVisible(true);

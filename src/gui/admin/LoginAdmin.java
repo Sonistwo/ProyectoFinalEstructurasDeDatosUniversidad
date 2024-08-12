@@ -1,20 +1,23 @@
 package gui.admin;
 
 import gui.control.ControlVentanas;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
-import logica.verificarCampos.camposVacios;
 
 public class LoginAdmin extends javax.swing.JFrame {
 
     public LoginAdmin() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         eventoSalida();
     }
 
@@ -60,6 +63,12 @@ public class LoginAdmin extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Contraseña");
+
+        campoUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                campoUsuarioKeyPressed(evt);
+            }
+        });
 
         btnContinuar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnContinuar.setText("Continuar");
@@ -146,7 +155,7 @@ public class LoginAdmin extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         
-        if(!camposValidos()){
+        if(!verificarSinVacios()){
             return;
         }
         
@@ -168,6 +177,7 @@ public class LoginAdmin extends javax.swing.JFrame {
 
     private void campoContrasenaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoContrasenaKeyPressed
         
+        campoContrasena.setBorder(ControlVentanas.NORMAL_TXT);
         int tecla = evt.getKeyCode();
         
         if(tecla == KeyEvent.VK_ENTER){
@@ -177,6 +187,18 @@ public class LoginAdmin extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_campoContrasenaKeyPressed
+
+    private void campoUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoUsuarioKeyPressed
+
+        campoUsuario.setBorder(ControlVentanas.NORMAL_TXT);
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            campoContrasena.requestFocusInWindow();
+            
+        }
+        
+    }//GEN-LAST:event_campoUsuarioKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnContinuar;
@@ -192,26 +214,29 @@ public class LoginAdmin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean verificarSinVacios() {
+        
+        boolean vacios = false;
 
-        camposVacios espejitoEspejito = new camposVacios();
-
-        String usuario = campoUsuario.getText();
-        String contrasena = campoContrasena.getText();
-
-        String[] datos = {usuario, contrasena};
-
-        if (!espejitoEspejito.sinVacios(datos)) {
-            JOptionPane.showMessageDialog(null, "Hay campos vacíos en algún campo.\nAsegúrese de llenar todos los campos.");
-            return false;
+        String mensajeSiVacio = "Los siguientes campos están vacíos verifique la información:\n";
+        
+        if(campoUsuario.getText().isEmpty()){
+            vacios = true;
+            campoUsuario.setBorder(ControlVentanas.MAL_TXT);
+            mensajeSiVacio += "Usuario\n";
+        }
+        
+        if(campoContrasena.getPassword().length == 0){
+            vacios = true;
+            campoContrasena.setBorder(ControlVentanas.MAL_TXT);
+            mensajeSiVacio += "Contraseña\n";
         }
 
+        if(vacios){
+            JOptionPane.showMessageDialog(null, mensajeSiVacio, "Error", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
         return true;
-
-    }
-
-    private boolean camposValidos() {
-
-        return verificarSinVacios();
 
     }
     

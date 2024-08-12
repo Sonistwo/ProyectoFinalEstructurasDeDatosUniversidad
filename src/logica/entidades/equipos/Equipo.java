@@ -4,23 +4,23 @@ import java.io.Serializable;
 
 public class Equipo implements Serializable {
 
-    private long serial;
+    private String serial;
     private String marca;
     private double tamano;
     private float precio;
 
-    public Equipo(long serial, String marca, double tamano, float precio) {
+    public Equipo(String serial, String marca, double tamano, float precio) {
         this.serial = serial;
         this.marca = marca;
         this.tamano = tamano;
         this.precio = precio;
     }
 
-    public long getSerial() {
+    public String getSerial() {
         return serial;
     }
 
-    public void setSerial(long serial) {
+    public void setSerial(String serial) {
         this.serial = serial;
     }
 

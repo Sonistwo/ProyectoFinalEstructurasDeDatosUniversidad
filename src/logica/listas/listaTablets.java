@@ -17,9 +17,9 @@ public class listaTablets implements Serializable {
         listaTabletas.add(pc);
     }
     
-    public boolean existeTablet(long serial){
+    public boolean existeTablet(String serial){
         for(TabletaGrafica tablet : listaTabletas){
-            if(tablet.getSerial() == serial){
+            if(tablet.getSerial().equals(serial)){
                 return true;
             }
         }
@@ -28,9 +28,9 @@ public class listaTablets implements Serializable {
         
     }
     
-    public TabletaGrafica obtenerTablet(long serial){
+    public TabletaGrafica obtenerTablet(String serial){
         for(TabletaGrafica tablet : listaTabletas){
-            if(tablet.getSerial() == serial){
+            if(tablet.getSerial().equals(serial)){
                 return tablet;
             }
         }

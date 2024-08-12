@@ -17,9 +17,9 @@ public class listaComputadores implements Serializable {
         listaPCs.add(pc);
     }
     
-    public boolean existePC(long serial){
+    public boolean existePC(String serial){
         for(Computador pc : listaPCs){
-            if(pc.getSerial() == serial){
+            if(pc.getSerial().equals(serial)){
                 return true;
             }
         }
@@ -28,9 +28,9 @@ public class listaComputadores implements Serializable {
         
     }
     
-    public Computador obtenerPC(long serial){
+    public Computador obtenerPC(String serial){
         for(Computador pc : listaPCs){
-            if(pc.getSerial() == serial){
+            if(pc.getSerial().equals(serial)){
                 return pc;
             }
         }

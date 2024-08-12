@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import logica.entidades.equipos.TabletaGrafica;
 
 import gui.modelado.ModeloTabla;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -36,6 +38,8 @@ public class PrestamoDiseno extends javax.swing.JFrame {
         initComponents();
         eventoSalida();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         inicializarTabla();
         mostrarTabla();
     }
@@ -92,12 +96,6 @@ public class PrestamoDiseno extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel4MouseMoved(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Almacenamiento");
@@ -106,11 +104,6 @@ public class PrestamoDiseno extends javax.swing.JFrame {
 
         cboxAlmacenamiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "256 GB", "512 GB", "1 TB" }));
         cboxAlmacenamiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cboxAlmacenamiento.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cboxAlmacenamientoMouseEntered(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -385,7 +378,7 @@ public class PrestamoDiseno extends javax.swing.JFrame {
             return;
         }
 
-        long serial = (Long) tablaPrestados.getValueAt(tabletSeleccionada, 0);
+        String serial = (String) tablaPrestados.getValueAt(tabletSeleccionada, 0);
 
         prestamos.obtenerPrestamoPorEstudiante(cedula).devolverTablet(serial);
 
@@ -402,18 +395,6 @@ public class PrestamoDiseno extends javax.swing.JFrame {
         confirmarVolver();
 
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void cboxAlmacenamientoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxAlmacenamientoMouseEntered
-
-        checarImagenEspacio();
-
-    }//GEN-LAST:event_cboxAlmacenamientoMouseEntered
-
-    private void jPanel4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseMoved
-        
-        checarImagenEspacio();
-        
-    }//GEN-LAST:event_jPanel4MouseMoved
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -502,7 +483,7 @@ public class PrestamoDiseno extends javax.swing.JFrame {
         for (PrestamosDiseno p : prestamos.copiarLista()) {
             if (p.getSolicitante().getCedula() == cedula) {
                 for (TabletaGrafica tablet : p.obtenerEquiposPrestados()) {
-                    long serial = tablet.getSerial();
+                    String serial = tablet.getSerial();
                     String marca = tablet.getMarca();
                     double tamano = tablet.getTamano();
                     String almacenamiento = tablet.getAlmacenamiento();
@@ -552,10 +533,10 @@ public class PrestamoDiseno extends javax.swing.JFrame {
 
         int espacioElegido = cboxAlmacenamiento.getSelectedIndex();
 
-        Icon porDefecto = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/espacio.png")).getImage());
-        Icon opcionDosCincoSeisGB = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/256gb.png")).getImage());
-        Icon opcionCincoDoceGB = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/512gb.png")).getImage());
-        Icon opcionUnaTera = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/1tb.png")).getImage());
+        Icon porDefecto = new ImageIcon(getClass().getResource("/recursos/prestamos/espacio.png"));
+        Icon opcionDosCincoSeisGB = new ImageIcon(getClass().getResource("/recursos/prestamos/256gb.png"));
+        Icon opcionCincoDoceGB = new ImageIcon(getClass().getResource("/recursos/prestamos/512gb.png"));
+        Icon opcionUnaTera = new ImageIcon(getClass().getResource("/recursos/prestamos/1tb.png"));
 
         switch (espacioElegido) {
 
@@ -580,6 +561,17 @@ public class PrestamoDiseno extends javax.swing.JFrame {
 
         }
 
+    }
+    
+    private void eventoItem(){
+        
+        cboxAlmacenamiento.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                checarImagenEspacio();
+            }
+        });
+        
     }
 
 }

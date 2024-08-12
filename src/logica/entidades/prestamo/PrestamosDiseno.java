@@ -34,9 +34,9 @@ public class PrestamosDiseno implements Serializable {
         return solicitante;
     }
     
-    public void devolverTablet(long serial){
+    public void devolverTablet(String serial){
         for(TabletaGrafica tablet : equiposPrestados){
-            if(tablet.getSerial() == serial){
+            if(tablet.getSerial().equals(serial)){
                 equiposPrestados.remove(tablet);
             }
         }

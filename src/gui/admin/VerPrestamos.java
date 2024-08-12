@@ -26,6 +26,8 @@ public class VerPrestamos extends javax.swing.JFrame {
     public VerPrestamos() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         inicializarTabla();
         mostrarTabla();
         eventoSalida();
@@ -100,9 +102,9 @@ public class VerPrestamos extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(451, Short.MAX_VALUE)
+                .addContainerGap(435, Short.MAX_VALUE)
                 .addComponent(btnVolver)
-                .addGap(420, 420, 420))
+                .addGap(436, 436, 436))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,9 +113,9 @@ public class VerPrestamos extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addComponent(btnVolver)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -181,7 +183,7 @@ public class VerPrestamos extends javax.swing.JFrame {
             String apellidos = p.getSolicitante().getApellido();
             
             for(TabletaGrafica tb : p.obtenerEquiposPrestados()){
-                long serial = tb.getSerial();
+                String serial = tb.getSerial();
                 String marca = tb.getMarca();
                 float precio = tb.getPrecio();
                 
@@ -200,7 +202,7 @@ public class VerPrestamos extends javax.swing.JFrame {
             String apellidos = p.getSolicitante().getApellido();
             
             for(Computador pc : p.obtenerEquiposPrestados()){
-                long serial = pc.getSerial();
+                String serial = pc.getSerial();
                 String marca = pc.getMarca();
                 float precio = pc.getPrecio();
                 

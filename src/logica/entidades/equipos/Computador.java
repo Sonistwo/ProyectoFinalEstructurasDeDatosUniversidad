@@ -7,7 +7,7 @@ public class Computador extends Equipo implements Serializable {
     private String sistemaOperativo;
     private String procesador;
 
-    public Computador(String sistemaOperativo, String procesador, long serial, String marca, double tamano, float precio) {
+    public Computador(String sistemaOperativo, String procesador, String serial, String marca, double tamano, float precio) {
         super(serial, marca, tamano, precio);
         this.sistemaOperativo = sistemaOperativo;
         this.procesador = procesador;

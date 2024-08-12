@@ -6,6 +6,8 @@ import javax.swing.JOptionPane;
 import logica.entidades.equipos.Computador;
 
 import gui.modelado.ModeloTabla;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -32,6 +34,7 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
         this.cedula = cedula;
         initComponents();
         eventoSalida();
+        eventoItem();
         this.setLocationRelativeTo(null);
         inicializarTabla();
         mostrarTabla();
@@ -89,12 +92,6 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel4MouseMoved(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("PROCESADOR");
@@ -103,11 +100,6 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
 
         cboxProcesador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "AMD Ryzen", "Intel® Core™ i5" }));
         cboxProcesador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cboxProcesador.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cboxProcesadorMouseEntered(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -137,12 +129,6 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
                         .addComponent(cboxProcesador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        jPanel5.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel5MouseMoved(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("SISTEMA OPERATIVO");
@@ -151,11 +137,6 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
 
         cboxOS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Windows 7", "Windows 10", "Windows 11" }));
         cboxOS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cboxOS.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cboxOSMouseEntered(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -396,7 +377,7 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
             return;
         }
 
-        long serial = (Long) tablaPrestados.getValueAt(pcSeleccionado, 0);
+        String serial = (String) tablaPrestados.getValueAt(pcSeleccionado, 0);
 
         prestamos.obtenerPrestamoPorEstudiante(cedula).devolverComputador(serial);
 
@@ -413,26 +394,6 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
         confirmarVolver();
 
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void cboxProcesadorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxProcesadorMouseEntered
-        
-        checarImagenProcesador();
-        
-    }//GEN-LAST:event_cboxProcesadorMouseEntered
-
-    private void cboxOSMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxOSMouseEntered
-        
-        checarImagenOS();
-        
-    }//GEN-LAST:event_cboxOSMouseEntered
-
-    private void jPanel4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseMoved
-        checarImagenProcesador();
-    }//GEN-LAST:event_jPanel4MouseMoved
-
-    private void jPanel5MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseMoved
-        checarImagenOS();
-    }//GEN-LAST:event_jPanel5MouseMoved
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -499,7 +460,7 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
         for (logica.entidades.prestamo.PrestamosIngenieria p : prestamos.copiarLista()) {
             if (p.getSolicitante().getCedula() == cedula) {
                 for (Computador pc : p.obtenerEquiposPrestados()) {
-                    long serial = pc.getSerial();
+                    String serial = pc.getSerial();
                     String marca = pc.getMarca();
                     double tamano = pc.getTamano();
                     String procesador = pc.getProcesador();
@@ -549,10 +510,10 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
         
         int OSelegido = cboxOS.getSelectedIndex();
         
-        Icon porDefecto = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/os.png")).getImage());
-        Icon w7 = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/w7.png")).getImage());
-        Icon w10 = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/w10.png")).getImage());
-        Icon w11 = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/w11.png")).getImage());
+        Icon porDefecto = new ImageIcon(getClass().getResource("/recursos/prestamos/os.png"));
+        Icon w7 = new ImageIcon(getClass().getResource("/recursos/prestamos/w7.png"));
+        Icon w10 = new ImageIcon(getClass().getResource("/recursos/prestamos/w10.png"));
+        Icon w11 = new ImageIcon(getClass().getResource("/recursos/prestamos/w11.png"));
         
         switch(OSelegido){
             
@@ -583,9 +544,9 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
         
         int procesadorElegido = cboxProcesador.getSelectedIndex();
 
-        Icon porDefecto = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/cpu.png")).getImage());
-        Icon amd = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/amd.png")).getImage());
-        Icon intel = new ImageIcon(new ImageIcon(getClass().getResource("/recursos/prestamos/intel.png")).getImage());
+        Icon porDefecto = new ImageIcon(getClass().getResource("/recursos/prestamos/cpu.png"));
+        Icon amd = new ImageIcon(getClass().getResource("/recursos/prestamos/amd.png"));
+        Icon intel = new ImageIcon(getClass().getResource("/recursos/prestamos/intel.png"));
 
         switch (procesadorElegido) {
 
@@ -605,6 +566,24 @@ public class PrestamoIngenieria extends javax.swing.JFrame {
                 break;
 
         }
+        
+    }
+    
+    private void eventoItem(){
+        
+        cboxOS.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                checarImagenOS();
+            }
+        });
+        
+        cboxProcesador.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                checarImagenProcesador();
+            }
+        });
         
     }
 
